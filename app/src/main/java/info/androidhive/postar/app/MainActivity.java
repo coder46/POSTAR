@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
@@ -48,10 +49,32 @@ public class MainActivity extends Activity {
     double longitude;
     double altitude;
 
+    TextView xAxisValue;
+    TextView yAxisValue;
+    TextView zAxisValue;
+    TextView headingValue;
+    TextView pitchValue;
+    TextView rollValue;
+    TextView altitudeValue;
+    TextView latitudeValue;
+    TextView longitudeValue;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        xAxisValue = (TextView) findViewById(R.id.xAxisValue);
+        yAxisValue = (TextView) findViewById(R.id.yAxisValue);
+        zAxisValue = (TextView) findViewById(R.id.zAxisValue);
+        headingValue = (TextView) findViewById(R.id.headingValue);
+        pitchValue = (TextView) findViewById(R.id.pitchValue);
+        rollValue = (TextView) findViewById(R.id.rollValue);
+        altitudeValue = (TextView) findViewById(R.id.altitudeValue);
+        latitudeValue = (TextView) findViewById(R.id.latitudeValue);
+        longitudeValue = (TextView) findViewById(R.id.longitudeValue);
 
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -85,7 +108,7 @@ public class MainActivity extends Activity {
         camera = Camera.open();
         sensorManager.registerListener(sensorEventListener,sensorManager.getDefaultSensor(accelerometerSensor),SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(sensorEventListener,sensorManager.getDefaultSensor(magnetometerSensor),SensorManager.SENSOR_DELAY_NORMAL);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0 ,locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 0 ,locationListener);
 
     }
 
@@ -124,6 +147,9 @@ public class MainActivity extends Activity {
                 Log.d(TAG,"Y Axis: " + String.valueOf(yAxis));
                 Log.d(TAG,"Z Axis: " + String.valueOf(zAxis));
 
+                xAxisValue.setText(String.valueOf(xAxis));
+                yAxisValue.setText(String.valueOf(yAxis));
+                zAxisValue.setText(String.valueOf(zAxis));
             }
 
             if(sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
@@ -148,6 +174,10 @@ public class MainActivity extends Activity {
                     Log.d(TAG,"Heading: " + String.valueOf(headingAngle));
                     Log.d(TAG,"Pitch: " + String.valueOf(pitchAngle));
                     Log.d(TAG,"Roll: " + String.valueOf(rollAngle));
+
+                    headingValue.setText(String.valueOf(headingAngle));
+                    pitchValue.setText(String.valueOf(pitchAngle));
+                    rollValue.setText(String.valueOf(rollAngle));
                 }
 
             }
@@ -173,6 +203,10 @@ public class MainActivity extends Activity {
             Log.d(TAG, "Latitude: " + String.valueOf(latitude));
             Log.d(TAG, "Longitude: " + String.valueOf(longitude));
             Log.d(TAG, "Altitude: " + String.valueOf(altitude));
+
+            latitudeValue.setText(String.valueOf(latitude));
+            longitudeValue.setText(String.valueOf(longitude));
+            altitudeValue.setText(String.valueOf(altitude));
         }
 
         @Override
